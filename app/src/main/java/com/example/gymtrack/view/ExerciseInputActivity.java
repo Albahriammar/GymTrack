@@ -1,6 +1,7 @@
 package com.example.gymtrack.view;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -151,17 +152,14 @@ public class ExerciseInputActivity extends AppCompatActivity {
 
         // Alle löschen
 
-
-
-
-
     }
 
-
     private void importData() {
-        File file = new File(getExternalFilesDir(null), exerciseName + "_training.csv");
-        IImportService importService = new ImportServiceImpl(new ExerciseDaoImpl(this));
 
+        File importDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(importDir, exerciseName + "_training.csv");
+
+        IImportService importService = new ImportServiceImpl(new ExerciseDaoImpl(this));
         boolean success = importService.importFromCSV(file);
 
         if (success) {
@@ -173,7 +171,7 @@ public class ExerciseInputActivity extends AppCompatActivity {
     }
     private void exportData() {
         try {
-            File exportDir = getExternalFilesDir(null);
+            File exportDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS);
             if (!exportDir.exists()) exportDir.mkdirs();
 
             File file = new File(exportDir, exerciseName + "_training.csv");
