@@ -1,0 +1,61 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rücken Training"
+            android:textSize="45sp"
+            android:textStyle="bold"
+            android:textColor="@color/titleBlue"
+            android:layout_marginBottom="70dp" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@color/primaryBackground"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:titleTextColor="@color/titleBlue"
+            android:layout_marginTop="1dp"
+            />
+
+        <Button
+            android:id="@+id/button_pullup"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="Klimmzüge"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginTop="18dp" />
+
+        <Button
+            android:id="@+id/button_lat"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="Latziehen"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginTop="18dp" />
+
+        <Button
+            android:id="@+id/button_row"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="Rudern"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginTop="18dp" />
+
+    </LinearLayout>
+</ScrollView>
+

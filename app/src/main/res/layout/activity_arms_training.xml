@@ -1,0 +1,69 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arm Training"
+            android:textSize="45sp"
+            android:textStyle="bold"
+            android:textColor="@color/titleBlue"
+            android:layout_marginBottom="60dp" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@color/primaryBackground"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:titleTextColor="@color/titleBlue"
+            android:layout_marginTop="1dp"
+            />
+
+        <Button
+            android:id="@+id/button_curls"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="Bizeps Curls"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginTop="18dp" />
+
+        <Button
+            android:id="@+id/button_hammer"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="Hammer Curls"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginTop="18dp" />
+
+        <Button
+            android:id="@+id/button_pushdowns"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="Trizeps Pushdowns"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginTop="18dp" />
+
+        <Button
+            android:id="@+id/button_dips"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="Trizeps Dips"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonGreen"
+            android:layout_marginTop="18dp" />
+
+    </LinearLayout>
+</ScrollView>
