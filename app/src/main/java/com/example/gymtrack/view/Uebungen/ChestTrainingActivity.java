@@ -8,7 +8,10 @@ import com.example.gymtrack.R;
 import com.example.gymtrack.view.ExerciseInputActivity;
 import androidx.appcompat.widget.Toolbar;
 
-
+/**
+ * Diese Activity zeigt Übungen für die Brusttraining.
+ * Aufbau ist identisch wie ArmsTrainingActivity.
+ */
 public class ChestTrainingActivity extends AppCompatActivity {
 
     @Override

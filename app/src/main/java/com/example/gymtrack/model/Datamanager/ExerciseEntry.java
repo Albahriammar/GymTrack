@@ -1,6 +1,11 @@
 package com.example.gymtrack.model.Datamanager;
 
+/**
+ * Diese Klasse beschreibt einen Trainingseintrag (z. B. Bankdrücken 80kg, 3 Sätze).
+ * Wird zur Speicherung und Darstellung genutzt.
+ */
 public class ExerciseEntry {
+
     private int id;
     private String exerciseName;
     private String category;
@@ -9,12 +14,14 @@ public class ExerciseEntry {
     private int sets;
     private long timestamp;
 
-    // Leerer Konstruktor (für z.B. SQLite-Helper oder Default-Wertsetzung)
-    public ExerciseEntry() {
-    }
+    /**
+     * Leerer Konstruktor (z. B. für Datenbank-Helper oder Tests).
+     */
+    public ExerciseEntry() {}
 
-    // Voller Konstruktor
-
+    /**
+     * Konstruktor mit allen Feldern (für neue Einträge).
+     */
     public ExerciseEntry(String exerciseName, String category, double weight, int reps, int sets, long timestamp) {
         this.exerciseName = exerciseName;
         this.category = category;
@@ -24,7 +31,8 @@ public class ExerciseEntry {
         this.timestamp = timestamp;
     }
 
-    // Getter & Setter
+    // Getter und Setter für alle Felder
+
     public int getId() {
         return id;
     }

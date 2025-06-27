@@ -9,6 +9,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.gymtrack.R;
 import com.example.gymtrack.view.ExerciseInputActivity;
 
+/**
+ * Diese Activity zeigt Übungen für die Schulder.
+ * Aufbau ist identisch wie ArmsTrainingActivity.
+ */
+
 public class ShoulderTrainingActivity extends AppCompatActivity {
 
     @Override

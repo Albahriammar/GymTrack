@@ -31,6 +31,12 @@ import com.example.gymtrack.model.Datamanager.ImportServiceImpl;
 import java.util.List;
 import java.io.File;
 
+/**
+ * Die Eingabeseite für eine bestimmte Übung.
+ * Hier kann der Nutzer Gewicht, Wiederholungen und Sätze eintragen,
+ * seine Historie sehen, löschen, bearbeiten oder exportieren/importieren.
+ */
+
 public class ExerciseInputActivity extends AppCompatActivity {
 
     private RecyclerView recyclerHistory;
@@ -51,22 +57,20 @@ public class ExerciseInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_input);
 
+        // Controller initialisieren, für Trainingsdaten
         controller = new TrainingControllerImpl(this);
         exportService = new ExportServiceImpl();
 
-        //  ZUERST: Daten vom Intent holen
+        //  Namen & Kategorie aus Intent übernehmen
         exerciseName = getIntent().getStringExtra("exercise_name");
         exerciseCategory = getIntent().getStringExtra("exercise_category");
 
-        //  Dann: ActionBar setzen
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(exerciseName);
-        }
+        // Toolbar konfigurieren
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setPopupTheme(androidx.appcompat.R.style.ThemeOverlay_AppCompat_Light);
         setSupportActionBar(toolbar);
 
+        // Zurück-Pfeil aktivieren, kein Titel anzeigen (wir zeigen ihn manuell im Layout)
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -74,7 +78,7 @@ public class ExerciseInputActivity extends AppCompatActivity {
         }
 
 
-        // 📦 View-Verbindungen
+        // UI mit Code verbinden
         recyclerHistory = findViewById(R.id.recycler_history);
         recyclerHistory.setLayoutManager(new LinearLayoutManager(this));
 
@@ -84,15 +88,14 @@ public class ExerciseInputActivity extends AppCompatActivity {
         button_save = findViewById(R.id.button_save);
         textTitle = findViewById(R.id.text_title);
 
-       // dao = new ExerciseDaoImpl(this);
 
         // Titel anzeigen
         textTitle.setText(exerciseName);
 
-        // Historie laden
+        // Alte Historie laden
         loadHistory();
 
-        // 👉 Swipe-to-Delete mit Bestätigung
+        // Swipe-to-Delete mit Bestätigung
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -121,7 +124,7 @@ public class ExerciseInputActivity extends AppCompatActivity {
         });
         itemTouchHelper.attachToRecyclerView(recyclerHistory);
 
-        //  Speichern
+        //  Speichern eines neuen Eintrags
         button_save.setOnClickListener(v -> {
             try {
                 double weight = Double.parseDouble(inputWeight.getText().toString());
@@ -140,20 +143,20 @@ public class ExerciseInputActivity extends AppCompatActivity {
                 controller.saveEntry(entry);
                 Toast.makeText(this, "Training gespeichert!", Toast.LENGTH_SHORT).show();
 
+                // Felder leeren
                 inputWeight.setText("");
                 inputReps.setText("");
                 inputSets.setText("");
 
-                loadHistory();
+                loadHistory(); // Liste aktualisieren
             } catch (Exception e) {
                 Toast.makeText(this, "Fehler bei Eingabe", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Alle löschen
-
     }
 
+    //Importiert CSV-Datei aus dem Download-Ordner
     private void importData() {
 
         File importDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -169,6 +172,8 @@ public class ExerciseInputActivity extends AppCompatActivity {
             Toast.makeText(this, "Import fehlgeschlagen", Toast.LENGTH_SHORT).show();
         }
     }
+
+    // Exportiert aktuelle Übungseinträge als CSV in den Download-Ordner
     private void exportData() {
         try {
             File exportDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS);
@@ -190,6 +195,7 @@ public class ExerciseInputActivity extends AppCompatActivity {
         }
     }
 
+    // Zeigt einen Dialog zum Bearbeiten eines vorhandenen Eintrags
     private void showEditDialog(ExerciseEntry entry) {
         final EditText inputWeightEdit = new EditText(this);
         final EditText inputRepsEdit = new EditText(this);
@@ -239,7 +245,7 @@ public class ExerciseInputActivity extends AppCompatActivity {
                 .show();
     }
 
-    // Handle ActionBar Zurück-Pfeil
+    // Handle ActionBar Zurück Pfeil
     @Override
     public boolean onSupportNavigateUp() {
         finish(); // zurück zur vorherigen Activity
@@ -267,6 +273,7 @@ public class ExerciseInputActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //  Pfeil in der ActionBar → zurück
     private void confirmDeleteAll() {
         new AlertDialog.Builder(ExerciseInputActivity.this)
                 .setTitle("Alle löschen")

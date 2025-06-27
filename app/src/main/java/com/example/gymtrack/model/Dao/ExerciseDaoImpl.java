@@ -11,17 +11,28 @@ import com.example.gymtrack.model.Datamanager.ExerciseEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Diese Klasse ist die Umsetzung von IExerciseDao.
+ * Sie verwaltet das Speichern, Abrufen, Löschen und Bearbeiten von Trainingsdaten in SQLite.
+ */
 public class ExerciseDaoImpl extends SQLiteOpenHelper implements IExerciseDao {
 
-    private static final String DATABASE_NAME = "gymtrack.db";
+    private static final String DATABASE_NAME = "gymtrack.db"; // Name der Datenbank
     private static final int DATABASE_VERSION = 1;
 
-    private static final String TABLE_NAME = "exercise_entries";
+    private static final String TABLE_NAME = "exercise_entries"; // Tabelle für Trainingseinträge
 
+    /**
+     * Erstellt das DAO mit SQLite-Unterstützung.
+     * @param context der App-Kontext
+     */
     public ExerciseDaoImpl(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Wird beim ersten Start der App ausgeführt – erstellt die Datenbank.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (" +
@@ -35,13 +46,19 @@ public class ExerciseDaoImpl extends SQLiteOpenHelper implements IExerciseDao {
         db.execSQL(createTable);
     }
 
+    /**
+     * Wird ausgeführt, wenn die Datenbank-Version erhöht wird.
+     * Aktuell wird dabei die alte Tabelle gelöscht und neu erstellt.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Einfach: Tabelle löschen und neu erstellen (nicht für reale Apps empfohlen)
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
+    /**
+     * Fügt einen neuen Trainingseintrag ein.
+     */
     @Override
     public void insert(ExerciseEntry entry) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -56,6 +73,9 @@ public class ExerciseDaoImpl extends SQLiteOpenHelper implements IExerciseDao {
         db.close();
     }
 
+    /**
+     * Aktualisiert einen bestehenden Eintrag.
+     */
     @Override
     public void update(ExerciseEntry entry) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -71,12 +91,19 @@ public class ExerciseDaoImpl extends SQLiteOpenHelper implements IExerciseDao {
         db.close();
     }
 
+    /**
+     * Löscht einen Eintrag anhand seiner ID.
+     */
     @Override
     public void delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, "id=?", new String[]{String.valueOf(id)});
         db.close();
     }
+
+    /**
+     * Löscht alle Einträge zu einer bestimmten Übung.
+     */
     @Override
     public void deleteAllForExercise(String exerciseName) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -84,7 +111,9 @@ public class ExerciseDaoImpl extends SQLiteOpenHelper implements IExerciseDao {
         db.close();
     }
 
-
+    /**
+     * Gibt alle gespeicherten Trainingseinträge zurück.
+     */
     @Override
     public List<ExerciseEntry> getAllEntries() {
         List<ExerciseEntry> list = new ArrayList<>();
@@ -101,6 +130,9 @@ public class ExerciseDaoImpl extends SQLiteOpenHelper implements IExerciseDao {
         return list;
     }
 
+    /**
+     * Gibt alle Einträge zu einer bestimmten Übung zurück.
+     */
     @Override
     public List<ExerciseEntry> getEntriesForExercise(String exerciseName) {
         List<ExerciseEntry> list = new ArrayList<>();
@@ -118,6 +150,9 @@ public class ExerciseDaoImpl extends SQLiteOpenHelper implements IExerciseDao {
         return list;
     }
 
+    /**
+     * Hilfsmethode: Erstellt ein ExerciseEntry-Objekt aus einer Datenbankzeile (Cursor).
+     */
     private ExerciseEntry buildEntryFromCursor(Cursor cursor) {
         ExerciseEntry entry = new ExerciseEntry();
         entry.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
